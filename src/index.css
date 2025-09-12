@@ -1,1 +1,27 @@
+/* google font  */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import "tailwindcss";
+
+@theme {
+  --font-title: "Noto Sans", sans-serif;
+  --font-body: "Noto Sans", sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-neutral-800);
+    color: var(--color-neutral-200);
+  }
+}
+
+@layer components {
+  .clickable:hover {
+    cursor: pointer;
+  }
+
+  .clickable:active {
+    transform: scale(90%);
+    opacity: 75%;
+  }
+}
