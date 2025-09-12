@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import ButtonToggleSearchModal from "./components/buttons/ButtonToggleSearchModal";
+import ButtonSearch from "./components/buttons/ButtonSearch";
 import Header from "./components/landmarks/Header";
 import Logo from "./components/Logo";
 import SearchModal from "./components/SearchModal";
@@ -23,10 +23,10 @@ function Root() {
 
   return (
     <>
-      <Header className="flex flex-wrap justify-between items-center gap-4 relative">
+      <Header className="flex flex-wrap justify-between items-center gap-4">
         <Logo />
         <div className="flex jusify-end gap-4">
-          <ButtonToggleSearchModal onClick={toggleSearchModal} />
+          <ButtonSearch text="search blogs" onClick={toggleSearchModal} />
         </div>
         <SearchModal ref={searchModalRef} />
       </Header>

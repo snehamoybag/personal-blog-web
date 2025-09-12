@@ -1,21 +1,23 @@
-import type { MouseEventHandler, ReactElement } from "react";
+import type { ButtonHTMLAttributes, ReactElement, ReactNode } from "react";
 
-interface ButtonToggleSearchModalProps {
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+interface ButtonSearchProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  text: string;
   className?: string;
 }
 
-export default function ButtonToggleSearchModal({
-  onClick,
+export default function ButtonSearch({
+  text,
   className = "",
-}: Readonly<ButtonToggleSearchModalProps>): ReactElement {
+  ...restProps
+}: Readonly<ButtonSearchProps>): ReactElement {
   return (
     <button
       type="button"
+      title={text}
       className={`clickable ${className}`}
-      onClick={onClick}
+      {...restProps}
     >
-      <span className="sr-only">search blogs</span>
+      <span className="sr-only">{text}</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24px"
