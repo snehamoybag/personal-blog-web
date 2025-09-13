@@ -10,7 +10,9 @@ export default function Logo({
   return (
     <div className={className}>
       <p className="text-3xl font-title font-black">
-        <a href="/">SB.</a>
+        <a href="/" className="no-underline">
+          SB.
+        </a>
       </p>
     </div>
   );
