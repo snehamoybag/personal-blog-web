@@ -59,7 +59,7 @@ export default function Post({
           />
         </a>
 
-        <p className="text-neutral-300 mt-2">
+        <p className="mt-2">
           <a href={blogPageUrl} className="no-underline">
             {formattedContent}
           </a>

@@ -9,7 +9,7 @@ export default function Logo({
 }: Readonly<LogoProps>): ReactElement {
   return (
     <div className={className}>
-      <p className="text-3xl font-title font-black">
+      <p className="text-neutral-200 text-3xl font-title font-black">
         <a href="/" className="no-underline">
           SB.
         </a>
