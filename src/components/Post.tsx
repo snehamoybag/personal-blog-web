@@ -60,7 +60,7 @@ export default function Post({
         </a>
 
         <p className="mt-2">
-          <a href={blogPageUrl} className="no-underline">
+          <a href={blogPageUrl} className="text-current no-underline">
             {formattedContent}
           </a>
         </p>

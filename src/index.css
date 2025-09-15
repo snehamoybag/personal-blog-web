@@ -24,6 +24,7 @@
   }
 
   a {
+    color: var(--color-neutral-200);
     text-decoration-line: underline;
     text-underline-offset: 2px;
   }
