@@ -8,13 +8,17 @@ interface ErrorPageProps {
 }
 
 export default function ErrorPage({
-  statusCode = 404,
-  message = "Page not found.",
+  statusCode = 500,
+  message = "Unknown server error.",
 }: Readonly<ErrorPageProps>): ReactElement {
   return (
     <Main>
       <Tittle700>Error {statusCode}:</Tittle700>
       <p>{message}</p>
+
+      <p className="mt-8">
+        <a href="/">Return to home page</a>
+      </p>
     </Main>
   );
 }

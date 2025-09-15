@@ -9,7 +9,7 @@ import ErrorPage from "./pages/ErrorPage";
 const routes: RouteObject[] = [
   {
     element: <Root />,
-    errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />, // for unknow errors
 
     children: [
       { path: "/", index: true, element: <IndexPage /> },
@@ -27,6 +27,13 @@ const routes: RouteObject[] = [
       {
         path: "/blogs/:blogId",
         element: <BlogPage />,
+      },
+
+      // HANDLE 404
+      // MAKE SURE IT IS AT THE END OF ALL ROUTES
+      {
+        path: "*",
+        element: <ErrorPage statusCode={404} message="Page not found." />,
       },
     ],
   },
