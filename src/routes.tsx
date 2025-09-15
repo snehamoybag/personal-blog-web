@@ -3,11 +3,13 @@ import Root from "./Root";
 import IndexPage from "./pages/IndexPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import BlogPage from "./pages/BlogPage";
+import ErrorPage from "./pages/ErrorPage";
 
 const routes: RouteObject[] = [
   {
     element: <Root />,
-    errorElement: <p>Error404: Page not found.</p>,
+    errorElement: <ErrorPage />,
 
     children: [
       { path: "/", index: true, element: <IndexPage /> },
@@ -24,6 +26,7 @@ const routes: RouteObject[] = [
 
       {
         path: "/blogs/:blogId",
+        element: <BlogPage />,
       },
     ],
   },
