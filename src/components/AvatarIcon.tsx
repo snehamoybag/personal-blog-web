@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import { useLayoutEffect, useRef, type ReactElement } from "react";
 
 interface AvatarIconProps {
   firstName: string;
@@ -13,8 +13,22 @@ export default function AvatarIcon({
   avatarUrl,
   className = "",
 }: Readonly<AvatarIconProps>): ReactElement {
+  const ref = useRef<HTMLDivElement | null>(null);
+
   const avatarBgColor =
     `#${firstName.charCodeAt(0) + lastName.charCodeAt(0) + 100}`.slice(0, 4); // +100 to make sure hex code always has 3 characters
+
+  useLayoutEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+
+    const elem = ref.current;
+    const elemWidth = elem.getBoundingClientRect().width; // in px
+    const relativeFontSize = elemWidth / 2; // 50% of parent width
+
+    elem.style.fontSize = relativeFontSize + "px";
+  }, []);
 
   return (
     <div
@@ -22,7 +36,8 @@ export default function AvatarIcon({
     >
       {!avatarUrl ? (
         <span
-          className="grid items-center h-full text-neutral-200 text-center font-bold uppercase italic"
+          ref={ref}
+          className="grid items-center size-full text-neutral-200 text-center font-bold uppercase italic"
           style={{
             backgroundColor: avatarBgColor,
           }}
