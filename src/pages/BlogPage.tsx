@@ -6,6 +6,7 @@ import Tittle700 from "../components/titles/Tittle700";
 import AuthorAndDate from "../components/AuthorAndDate";
 import Tag from "../components/Tag";
 import Tittle400 from "../components/titles/Title400";
+import CommentEditor from "../components/CommentEditor";
 
 export default function BlogPage(): ReactElement {
   // const params = useParams();
@@ -47,7 +48,9 @@ export default function BlogPage(): ReactElement {
         </footer>
       </article>
 
-      {/* TODO: Comments section */}
+      <section className="mt-12">
+        <CommentEditor author={author} />
+      </section>
     </Main>
   );
 }
