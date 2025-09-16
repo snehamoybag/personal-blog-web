@@ -7,6 +7,7 @@ import AuthorAndDate from "../components/AuthorAndDate";
 import Tag from "../components/Tag";
 import Tittle400 from "../components/titles/Title400";
 import CommentEditor from "../components/CommentEditor";
+import Comment from "../components/Comment";
 
 export default function BlogPage(): ReactElement {
   // const params = useParams();
@@ -21,8 +22,8 @@ export default function BlogPage(): ReactElement {
   const { title, content, tags, createdAt, updatedAt, author } = blog;
 
   return (
-    <Main>
-      <article>
+    <Main className="px-8">
+      <article className="pt-8">
         <header>
           <Tittle700 as="h1">{title}</Tittle700>
 
@@ -50,6 +51,25 @@ export default function BlogPage(): ReactElement {
 
       <section className="mt-12">
         <CommentEditor author={author} />
+
+        <ol className="mt-12 grid gap-8">
+          <li>
+            <Comment
+              author={author}
+              message="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis vel consequatur eius optio eaque doloremque voluptatum nulla omnis, quasi sunt ipsum aliquid! Distinctio laboriosam deleniti natus, earum doloribus rem, sint nulla tempora adipisci totam sapiente cumque iusto suscipit? Iusto cumque cum unde eveniet ipsum molestiae neque ut excepturi saepe ratione!"
+              createdAt={new Date("05-10-2025")}
+              updatedAt={new Date("06-10-2025")}
+            />
+          </li>
+          <li>
+            <Comment
+              author={author}
+              message="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis vel consequatur eius optio eaque doloremque voluptatum nulla omnis, quasi sunt ipsum aliquid! Distinctio laboriosam deleniti natus, earum doloribus rem, sint nulla tempora adipisci totam sapiente cumque iusto suscipit? Iusto cumque cum unde eveniet ipsum molestiae neque ut excepturi saepe ratione!"
+              createdAt={new Date("05-10-2025")}
+              updatedAt={new Date("06-10-2025")}
+            />
+          </li>
+        </ol>
       </section>
     </Main>
   );
