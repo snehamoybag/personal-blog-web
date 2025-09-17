@@ -22,8 +22,8 @@ export default function BlogPage(): ReactElement {
   const { title, content, tags, createdAt, updatedAt, author } = blog;
 
   return (
-    <Main className="px-8">
-      <article className="pt-8">
+    <Main>
+      <article className="grid gap-y-8 container-primary p-8 pb-12 border-b-1 border-neutral-700">
         <header>
           <Tittle700 as="h1">{title}</Tittle700>
 
@@ -34,9 +34,9 @@ export default function BlogPage(): ReactElement {
           />
         </header>
 
-        <section className="mt-8">{content}</section>
+        <section>{content}</section>
 
-        <footer className="mt-8">
+        <footer>
           <div className="flex gap-2">
             <Tittle400>Tags: </Tittle400>
 
@@ -49,10 +49,10 @@ export default function BlogPage(): ReactElement {
         </footer>
       </article>
 
-      <section className="mt-12">
+      <section className="container-primary px-8 py-12">
         <CommentEditor author={author} />
 
-        <ol className="mt-12 grid gap-8">
+        <ol className="grid gap-8 mt-8">
           <li>
             <Comment
               author={author}

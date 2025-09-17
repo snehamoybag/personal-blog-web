@@ -11,5 +11,9 @@ export default function Tittle700({
   className = "",
   children,
 }: Readonly<Tittle700Props>): ReactElement {
-  return <Tag className={`text-2xl font-bold ${className}`}>{children}</Tag>;
+  return (
+    <Tag className={`text-2xl font-bold sm:text-4xl ${className}`}>
+      {children}
+    </Tag>
+  );
 }

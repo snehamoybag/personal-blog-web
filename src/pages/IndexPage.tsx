@@ -6,9 +6,11 @@ import blogs from "../libs/blogsData";
 export default function IndexPage(): ReactElement {
   return (
     <Main>
-      {blogs.map((blog) => (
-        <Post blog={blog} />
-      ))}
+      <section className="container-primary">
+        {blogs.map((blog) => (
+          <Post blog={blog} />
+        ))}
+      </section>
     </Main>
   );
 }

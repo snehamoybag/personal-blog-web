@@ -13,8 +13,8 @@ export default function Post({
   className = "",
   blog,
 }: Readonly<PostProps>): ReactElement {
-  const MAX_TITLE_LENGTH = 65;
-  const MAX_CONTENT_LENGTH = 200;
+  const MAX_TITLE_LENGTH = 95;
+  const MAX_CONTENT_LENGTH = 500;
 
   const blogTitle = blog.title;
   const blogContent = blog.content;
@@ -47,7 +47,7 @@ export default function Post({
           </a>
         </Tittle700>
 
-        <AuthorAndDate author={blog.author} date={blogDate} className="mt-2" />
+        <AuthorAndDate author={blog.author} date={blogDate} className="mt-4" />
       </header>
 
       <section>
@@ -55,11 +55,11 @@ export default function Post({
           <img
             src={coverImgUrl}
             alt="cover image"
-            className="aspect-video object-cover object-top rounded-xl"
+            className="aspect-video object-cover object-top rounded-xl mx-auto"
           />
         </a>
 
-        <p className="mt-2">
+        <p className="mt-4">
           <a href={blogPageUrl} className="text-current no-underline">
             {formattedContent}
           </a>
@@ -67,10 +67,10 @@ export default function Post({
       </section>
 
       <footer>
-        <ol className="flex flex-wrap items-center gap-x-2 gap-y-4">
+        <ol className="flex flex-wrap items-center gap-2">
           {blog.tags.map((tagName) => (
             <li>
-              <Tag name={tagName} className="text-xs" />
+              <Tag name={tagName} className="text-sm" />
             </li>
           ))}
         </ol>

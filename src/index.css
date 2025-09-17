@@ -10,6 +10,7 @@
 
 @layer base {
   body {
+    font-size: var(--text-base);
     background-color: var(--color-neutral-800);
     color: var(--color-neutral-300);
   }
@@ -39,6 +40,12 @@
     color: var(--color-neutral-200);
     border: 1px solid var(--color-neutral-700);
   }
+
+  @media (min-width: 40em) {
+    body {
+      font-size: var(--text-lg);
+    }
+  }
 }
 
 @layer components {
@@ -57,5 +64,10 @@
 
   .hidden-underline:hover {
     text-decoration-line: underline;
+  }
+
+  .container-primary {
+    max-width: var(--container-2xl);
+    margin-inline: auto;
   }
 }

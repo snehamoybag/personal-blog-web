@@ -11,7 +11,7 @@ export default function Header({
 }: Readonly<HeaderProps>): ReactElement {
   return (
     <header
-      className={`card p-4 border-b-1 border-solid border-neutral-700 ${className}`}
+      className={`card p-4 border-b-1 border-solid border-neutral-700 sm:px-8 ${className}`}
     >
       {children}
     </header>
