@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import ButtonSearch from "./components/buttons/ButtonSearch";
 import Header from "./components/landmarks/Header";
 import Logo from "./components/Logo";
@@ -7,33 +7,10 @@ import ButtonAccount from "./components/buttons/ButtonAccount";
 import AccountOptions from "./components/AccountOptions";
 import ListItem from "./components/ListItem";
 import { Outlet } from "react-router";
-import type { User } from "./types/User";
-
-const USER_KEY = String(import.meta.env.USER_KEY);
+import useUser from "./hooks/useUser";
 
 function Root() {
-  const [user, setUser] = useState<User | null>(() => {
-    // get initial value from local storage
-    const rawData = localStorage.getItem(USER_KEY);
-
-    if (!rawData) {
-      return null;
-    }
-
-    return JSON.parse(rawData) satisfies User;
-  });
-
-  useEffect(() => {
-    // sync local storage with component
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
-  }, [user]);
-
-  const outletContext = {
-    user: {
-      get: user,
-      set: setUser,
-    },
-  };
+  const { user } = useUser();
 
   const searchModalRef = useRef<HTMLDialogElement>(null);
   const accountOptionsRef = useRef<HTMLDialogElement>(null);
@@ -102,7 +79,7 @@ function Root() {
         <SearchModal ref={searchModalRef} />
       </Header>
 
-      <Outlet context={outletContext} />
+      <Outlet context={null} />
     </>
   );
 }
