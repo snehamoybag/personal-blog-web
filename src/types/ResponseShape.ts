@@ -1,4 +1,4 @@
-export interface ResponseShape {
+export interface ParsedResponseShape {
   statusCode: number;
   status: "success" | "failure" | "error";
   message: string;

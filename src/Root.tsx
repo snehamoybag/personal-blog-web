@@ -8,24 +8,18 @@ import AccountOptions from "./components/AccountOptions";
 import ListItem from "./components/ListItem";
 import { Outlet } from "react-router";
 import type { User } from "./types/User";
-
-const USER_KEY = String(import.meta.env.USER_KEY);
+import {
+  getUserFromLocalStorage,
+  setUserToLocalStorage,
+} from "./libs/localStorageUser";
+import type { OutletContext } from "./types/OutletCotext";
 
 function Root() {
-  const [user, setUser] = useState<User | null>(() => {
-    // get initial value from local storage
-    const rawData = localStorage.getItem(USER_KEY);
-
-    if (!rawData) {
-      return null;
-    }
-
-    return JSON.parse(rawData) satisfies User;
-  });
+  const [user, setUser] = useState<User | null>(getUserFromLocalStorage());
 
   useEffect(() => {
     // sync local storage with component
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
+    setUserToLocalStorage(user);
   }, [user]);
 
   const outletContext = {
@@ -102,7 +96,7 @@ function Root() {
         <SearchModal ref={searchModalRef} />
       </Header>
 
-      <Outlet context={outletContext} />
+      <Outlet context={outletContext satisfies OutletContext} />
     </>
   );
 }
