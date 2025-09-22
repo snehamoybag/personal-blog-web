@@ -12,7 +12,7 @@ import Input from "../components/form-elemets/Input";
 import useUser from "../hooks/useUser";
 import getApiUrl from "../libs/getApiUrl";
 import type { ParsedResponseShape } from "../types/ResponseShape";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { setAuthTokenToLocalStorage } from "../libs/localStorageAPIAuthToken";
 import type { User } from "../types/User";
 import type { FieldErrors } from "../types/FieldErrors";
@@ -122,7 +122,7 @@ export default function SignupPage({}: Readonly<SignupPageProps>): ReactElement 
             Please sign up by filling the form with appropriate informations.
           </p>
           <p>
-            Already have an account? <a href="/login">Log in</a>.
+            Already have an account? <Link to="/login">Log in</Link>.
           </p>
         </div>
 

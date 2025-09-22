@@ -6,7 +6,7 @@ import SearchModal from "./components/SearchModal";
 import ButtonAccount from "./components/buttons/ButtonAccount";
 import AccountOptions from "./components/AccountOptions";
 import ListItem from "./components/ListItem";
-import { Outlet } from "react-router";
+import { Link, Outlet } from "react-router";
 import type { User } from "./types/User";
 import {
   getUserFromLocalStorage,
@@ -79,14 +79,14 @@ function Root() {
               {!user && (
                 <ol role="list">
                   <ListItem>
-                    <a href="/login" className="hidden-underline">
+                    <Link to="/login" className="hidden-underline">
                       Log in
-                    </a>
+                    </Link>
                   </ListItem>
                   <ListItem className="mt-2">
-                    <a href="/signup" className="hidden-underline">
+                    <Link to="/signup" className="hidden-underline">
                       Sign up
-                    </a>
+                    </Link>
                   </ListItem>
                 </ol>
               )}

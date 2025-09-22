@@ -3,6 +3,7 @@ import type { User } from "../types/User";
 import FieldWrapper from "./form-elemets/FieldWrapper";
 import Textarea from "./form-elemets/Textarea";
 import AvatarIcon from "./AvatarIcon";
+import { Link } from "react-router";
 
 interface CommentEditorProps {
   author: User;
@@ -19,14 +20,14 @@ export default function CommentEditor({
 
   return (
     <div className={`flex items-start gap-4 ${className}`}>
-      <a href={`/user/${author.id}`} className="no-underline">
+      <Link to={`/user/${author.id}`} className="no-underline">
         <AvatarIcon
           firstName={author.profile.firstName}
           lastName={author.profile.lastName}
           avatarUrl={author.profile.avatarUrl || undefined}
           className="size-12"
         />
-      </a>
+      </Link>
       <form action="/comments" method="post" className="basis-full">
         <FieldWrapper>
           <label htmlFor="comment" className="sr-only">

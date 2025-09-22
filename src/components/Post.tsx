@@ -3,6 +3,7 @@ import type { Blog } from "../types/Blog";
 import Tittle700 from "./titles/Tittle700";
 import AuthorAndDate from "./AuthorAndDate";
 import Tag from "./Tag";
+import { Link } from "react-router";
 
 interface PostProps {
   blog: Blog;
@@ -42,27 +43,27 @@ export default function Post({
     >
       <header>
         <Tittle700>
-          <a href={blogPageUrl} className="no-underline">
+          <Link to={blogPageUrl} className="no-underline">
             {formattedTitle}
-          </a>
+          </Link>
         </Tittle700>
 
         <AuthorAndDate author={blog.author} date={blogDate} className="mt-4" />
       </header>
 
       <section>
-        <a href={blogPageUrl}>
+        <Link to={blogPageUrl}>
           <img
             src={coverImgUrl}
             alt="cover image"
             className="aspect-video object-cover object-top rounded-xl mx-auto"
           />
-        </a>
+        </Link>
 
         <p className="mt-4">
-          <a href={blogPageUrl} className="text-current no-underline">
+          <Link to={blogPageUrl} className="text-current no-underline">
             {formattedContent}
-          </a>
+          </Link>
         </p>
       </section>
 

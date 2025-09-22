@@ -1,6 +1,7 @@
 import type { ReactElement } from "react";
 import type { User } from "../types/User";
 import AvatarIcon from "./AvatarIcon";
+import { Link } from "react-router";
 
 interface AuthorAndDateProps {
   author: User;
@@ -19,19 +20,19 @@ export default function AuthorAndDate({
   return (
     <div className={`flex flex-wrap items-center gap-2 ${className}`}>
       <div className="flex items-center gap-2">
-        <a href={authorUrl} className="no-underline">
+        <Link to={authorUrl} className="no-underline">
           <AvatarIcon
             firstName={profile.firstName}
             lastName={profile.lastName}
             avatarUrl={profile.avatarUrl || undefined}
           />
-        </a>
+        </Link>
 
         <p className="capitalize">
-          <a
-            href={authorUrl}
+          <Link
+            to={authorUrl}
             className="hidden-underline"
-          >{`${profile.firstName} ${profile.lastName}`}</a>
+          >{`${profile.firstName} ${profile.lastName}`}</Link>
         </p>
       </div>
       &bull;

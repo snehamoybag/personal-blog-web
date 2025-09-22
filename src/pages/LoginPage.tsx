@@ -13,7 +13,7 @@ import useUser from "../hooks/useUser";
 import getApiUrl from "../libs/getApiUrl";
 import type { ParsedResponseShape } from "../types/ResponseShape";
 import type { User } from "../types/User";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { setAuthTokenToLocalStorage } from "../libs/localStorageAPIAuthToken";
 
 export default function LoginPage(): ReactElement {
@@ -90,7 +90,7 @@ export default function LoginPage(): ReactElement {
         <div className="mt-4">
           <p>Log in using your email and password.</p>
           <p>
-            Don't have an account yet? <a href="/signup">Sign up</a>.
+            Don't have an account yet? <Link to="/signup">Sign up</Link>.
           </p>
         </div>
 

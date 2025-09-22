@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import { Link } from "react-router";
 
 interface LogoProps {
   className?: string;
@@ -10,9 +11,9 @@ export default function Logo({
   return (
     <div className={className}>
       <p className="text-3xl font-title font-black">
-        <a href="/" className="no-underline">
+        <Link to="/" className="no-underline">
           SB.
-        </a>
+        </Link>
       </p>
     </div>
   );

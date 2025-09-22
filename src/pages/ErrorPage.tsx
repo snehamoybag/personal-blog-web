@@ -1,6 +1,7 @@
 import type { ReactElement } from "react";
 import Main from "../components/landmarks/Main";
 import Tittle700 from "../components/titles/Tittle700";
+import { Link } from "react-router";
 
 interface ErrorPageProps {
   statusCode?: number;
@@ -17,7 +18,7 @@ export default function ErrorPage({
       <p>{message}</p>
 
       <p className="mt-8">
-        <a href="/">Return to home page</a>
+        <Link to="/">Return to home page</Link>
       </p>
     </Main>
   );
