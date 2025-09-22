@@ -147,7 +147,7 @@ export default function SignupPage({}: Readonly<SignupPageProps>): ReactElement 
               />
 
               {fieldErrors.firstName && (
-                <ErrorLabel htmlFor="firstName">
+                <ErrorLabel htmlFor="first-name">
                   {fieldErrors.firstName.msg}
                 </ErrorLabel>
               )}
@@ -168,7 +168,7 @@ export default function SignupPage({}: Readonly<SignupPageProps>): ReactElement 
               />
 
               {fieldErrors.lastName && (
-                <ErrorLabel htmlFor="lastName">
+                <ErrorLabel htmlFor="last-name">
                   {fieldErrors.lastName.msg}
                 </ErrorLabel>
               )}
@@ -228,7 +228,7 @@ export default function SignupPage({}: Readonly<SignupPageProps>): ReactElement 
             />
 
             {fieldErrors.confirmedPassword && (
-              <ErrorLabel htmlFor="confirmedPassword">
+              <ErrorLabel htmlFor="confirmed-password">
                 {fieldErrors.confirmedPassword.msg}
               </ErrorLabel>
             )}
