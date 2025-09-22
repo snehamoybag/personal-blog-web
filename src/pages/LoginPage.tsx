@@ -14,7 +14,6 @@ import getApiUrl from "../libs/getApiUrl";
 import type { ParsedResponseShape } from "../types/ResponseShape";
 import type { User } from "../types/User";
 import { useNavigate } from "react-router";
-import { setUserToLocalStorage } from "../libs/localStorageUser";
 import { setAuthTokenToLocalStorage } from "../libs/localStorageAPIAuthToken";
 
 export default function LoginPage(): ReactElement {
