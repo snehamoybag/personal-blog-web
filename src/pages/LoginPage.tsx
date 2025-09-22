@@ -17,8 +17,9 @@ import { useNavigate } from "react-router";
 import { setAuthTokenToLocalStorage } from "../libs/localStorageAPIAuthToken";
 
 export default function LoginPage(): ReactElement {
-  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { setUser } = useUser();
   const redirectTo = useNavigate();
 
@@ -45,13 +46,20 @@ export default function LoginPage(): ReactElement {
       })
       .then((result: ParsedResponseShape) => {
         const { status, statusCode, message, data } = result;
+        let error: Error | null = null;
 
         if (statusCode >= 400 || status !== "success") {
-          throw new Error(message);
+          error = new Error(message);
+
+          setError(error);
+          throw error;
         }
 
         if (!data || !data.user) {
-          throw new Error("User data not found in response body.");
+          error = new Error("User data not found in response body.");
+
+          setError(error);
+          throw error;
         }
 
         // set user and auth token
@@ -64,6 +72,7 @@ export default function LoginPage(): ReactElement {
         redirectTo("/");
       })
       .catch((err) => {
+        setError(err);
         throw err;
       })
       .finally(() => setIsLoading(false));
@@ -90,6 +99,8 @@ export default function LoginPage(): ReactElement {
           className="grid gap-4 mt-8"
           onSubmit={handleFormSubmit}
         >
+          {error !== null && <p className="text-red-300">{error.message}</p>}
+
           <FieldWrapper>
             <label htmlFor="email">Email:</label>
             <Input
@@ -99,6 +110,7 @@ export default function LoginPage(): ReactElement {
               value={formData.email}
               onChange={handleFormDataChange}
               required
+              isInvalid={error !== null}
             />
           </FieldWrapper>
 
@@ -111,10 +123,15 @@ export default function LoginPage(): ReactElement {
               value={formData.password}
               onChange={handleFormDataChange}
               required
+              isInvalid={error !== null}
             />
           </FieldWrapper>
 
-          <ButtonPrimary type="submit" className="py-4 mt-2">
+          <ButtonPrimary
+            type="submit"
+            className="py-4 mt-2"
+            disabled={isLoading}
+          >
             Log in
           </ButtonPrimary>
         </form>
