@@ -23,20 +23,27 @@ export default function AvatarIcon({
       return;
     }
 
+    const falbackFontSize = 16; // in px
     const elem = ref.current;
-    const elemWidth = elem.getBoundingClientRect().width; // in px
-    const relativeFontSize = elemWidth / 2; // 50% of parent width
+    const elemmWidth = elem.getBoundingClientRect().width;
+    const relativeFontSize = elemmWidth / 2; // 50% of parent width
 
-    elem.style.fontSize = relativeFontSize + "px";
+    elem.style.fontSize = (relativeFontSize || falbackFontSize) + "px";
   }, []);
 
   return (
     <div
+      ref={ref}
       className={`size-8 border-2 border-neutral-700 rounded-full overflow-hidden ${className}`}
     >
-      {!avatarUrl ? (
+      {avatarUrl ? (
+        <img
+          src={avatarUrl}
+          alt={`avatar of ${firstName} ${lastName}`}
+          className="size-full object-contain object-center"
+        />
+      ) : (
         <span
-          ref={ref}
           className="grid items-center size-full text-neutral-200 text-center font-bold uppercase italic"
           style={{
             backgroundColor: avatarBgColor,
@@ -44,12 +51,6 @@ export default function AvatarIcon({
         >
           {firstName[0] + lastName[0]}
         </span>
-      ) : (
-        <img
-          src={avatarUrl}
-          alt={`avatar of ${firstName} ${lastName}`}
-          className="size-full object-contain object-center"
-        />
       )}
     </div>
   );
