@@ -1,4 +1,4 @@
-import type { JSX, ReactElement, ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 
 interface ListItemProps {
   className?: string;
@@ -9,5 +9,5 @@ export default function ListItem({
   className = "",
   children,
 }: Readonly<ListItemProps>): ReactElement {
-  return <li className={`${className}`}>{children}</li>;
+  return <li className={`p-4 ${className}`}>{children}</li>;
 }

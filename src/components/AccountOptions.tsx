@@ -12,7 +12,7 @@ export default function AccountOptions({
   children,
 }: Readonly<AccountOptionsProps>): ReactElement {
   return (
-    <dialog ref={ref} className={`p-4 rounded-sm shadow-md ${className}`}>
+    <dialog ref={ref} className={`rounded-lg shadow-md ${className}`}>
       {children}
     </dialog>
   );

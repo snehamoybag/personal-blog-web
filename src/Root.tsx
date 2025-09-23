@@ -5,14 +5,15 @@ import Logo from "./components/Logo";
 import SearchModal from "./components/SearchModal";
 import ButtonAccount from "./components/buttons/ButtonAccount";
 import AccountOptions from "./components/AccountOptions";
-import ListItem from "./components/ListItem";
-import { Link, Outlet } from "react-router";
+import { Outlet } from "react-router";
 import type { User } from "./types/User";
 import {
   getUserFromLocalStorage,
   setUserToLocalStorage,
 } from "./libs/localStorageUser";
 import type { OutletContext } from "./types/OutletCotext";
+import GuestAccountOptions from "./components/GuestAccountOptions";
+import UserAccountOptions from "./components/UserAccountOptions";
 
 function Root() {
   const [user, setUser] = useState<User | null>(getUserFromLocalStorage());
@@ -68,6 +69,7 @@ function Root() {
 
           <div className="relative">
             <ButtonAccount
+              profile={user?.profile}
               text="account options"
               onClick={toggleAccountOptions}
             />
@@ -76,20 +78,13 @@ function Root() {
               ref={accountOptionsRef}
               className="min-w-max top-full ml-auto"
             >
-              {!user && (
-                <ol role="list">
-                  <ListItem>
-                    <Link to="/login" className="hidden-underline">
-                      Log in
-                    </Link>
-                  </ListItem>
-                  <ListItem className="mt-2">
-                    <Link to="/signup" className="hidden-underline">
-                      Sign up
-                    </Link>
-                  </ListItem>
-                </ol>
-              )}
+              <ol role="list" className="account-options-list">
+                {user ? (
+                  <UserAccountOptions user={user} />
+                ) : (
+                  <GuestAccountOptions />
+                )}
+              </ol>
             </AccountOptions>
           </div>
         </div>
