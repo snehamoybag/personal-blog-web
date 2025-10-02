@@ -16,7 +16,7 @@ import GuestAccountOptions from "./components/GuestAccountOptions";
 import UserAccountOptions from "./components/UserAccountOptions";
 
 function Root() {
-  const [user, setUser] = useState<User | null>(getUserFromLocalStorage());
+  const [user, setUser] = useState<User | null>(getUserFromLocalStorage);
 
   useEffect(() => {
     // sync local storage with component
