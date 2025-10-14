@@ -16,9 +16,9 @@ export default function ErrorPage(): ReactElement {
 
   if (isRouteErrorResponse(error)) {
     title = `${error.status}: ${error.statusText}`;
-    paragraph = error.data;
+    paragraph = JSON.stringify(error.data);
   } else if (error instanceof Error) {
-    title = `503: ${error.name || "Dang! Something went wrong."}`;
+    title = `503 ${"Something went wrong."}`;
     paragraph = error.message;
   }
 

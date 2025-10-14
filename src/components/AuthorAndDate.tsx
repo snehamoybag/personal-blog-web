@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 interface AuthorAndDateProps {
   author: User;
-  date: { createdAt: Date; updatedAt?: Date };
+  date: { createdAt: string; updatedAt?: string };
   className?: string;
 }
 
@@ -37,7 +37,7 @@ export default function AuthorAndDate({
       </div>
       &bull;
       <p className="text-neutral-300 font-light">
-        {date.createdAt.toDateString()}
+        {new Date(date.createdAt).toDateString()}
       </p>
     </div>
   );

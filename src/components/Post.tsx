@@ -31,7 +31,7 @@ export default function Post({
       : blogContent;
 
   const blogPageUrl = `/blogs/${blog.id}`;
-  const coverImgUrl = blog.imgUrls[0];
+  const coverImgUrl = blog.coverImgUrl;
   const blogDate = {
     createdAt: blog.createdAt,
     updatedAt: blog.updatedAt,
@@ -70,7 +70,7 @@ export default function Post({
       <footer>
         <ol className="flex flex-wrap items-center gap-2">
           {blog.tags.map((tagName) => (
-            <li>
+            <li key={tagName}>
               <Tag name={tagName} className="text-sm" />
             </li>
           ))}
