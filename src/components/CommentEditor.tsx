@@ -4,6 +4,7 @@ import FieldWrapper from "./form-elemets/FieldWrapper";
 import Textarea from "./form-elemets/Textarea";
 import AvatarIcon from "./AvatarIcon";
 import { Link } from "react-router";
+import ButtonPrimary from "./buttons/ButtonPrimary";
 
 interface CommentEditorProps {
   author: User;
@@ -36,10 +37,12 @@ export default function CommentEditor({
           <Textarea
             id="comment"
             name="comment"
-            placeholder="Press 'Enter' to post comment..."
+            rows={3}
+            placeholder="Write a comment..."
             required
-          ></Textarea>
+          />
         </FieldWrapper>
+        <ButtonPrimary className="mt-4">Comment</ButtonPrimary>
       </form>
     </div>
   );
