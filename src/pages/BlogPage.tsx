@@ -4,17 +4,16 @@ import Tittle700 from "../components/titles/Tittle700";
 import AuthorAndDate from "../components/AuthorAndDate";
 import Tag from "../components/Tag";
 import Tittle400 from "../components/titles/Title400";
-import CommentEditor from "../components/CommentEditor";
-import Comment from "../components/Comment";
 import { useParams } from "react-router";
 import useDataFetcher from "../hooks/useDataFetcher";
 import type { Blog } from "../types/Blog";
 import LoadingModal from "../components/LoadingModal";
 import getApiUrl from "../libs/getApiUrl";
 import ButtonPrimary from "../components/buttons/ButtonPrimary";
+import CommentBox from "../components/CommentBox";
 
 export default function BlogPage(): ReactElement {
-  const { state, data, error, fetcher } = useDataFetcher();
+  const { state: state, data, error, fetcher } = useDataFetcher();
   const [loadComments, setLoadComments] = useState(false);
 
   const params = useParams();
@@ -91,27 +90,8 @@ export default function BlogPage(): ReactElement {
             Load Comments ?
           </ButtonPrimary>
         ) : (
-          <section className="max-w-xl mt-16 mx-auto">
-            <CommentEditor author={author} />
-
-            <ol className="grid gap-8 mt-8">
-              <li>
-                <Comment
-                  author={author}
-                  message="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis vel consequatur eius optio eaque doloremque voluptatum nulla omnis, quasi sunt ipsum aliquid! Distinctio laboriosam deleniti natus, earum doloribus rem, sint nulla tempora adipisci totam sapiente cumque iusto suscipit? Iusto cumque cum unde eveniet ipsum molestiae neque ut excepturi saepe ratione!"
-                  createdAt={new Date("05-10-2025")}
-                  updatedAt={new Date("06-10-2025")}
-                />
-              </li>
-              <li>
-                <Comment
-                  author={author}
-                  message="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis vel consequatur eius optio eaque doloremque voluptatum nulla omnis, quasi sunt ipsum aliquid! Distinctio laboriosam deleniti natus, earum doloribus rem, sint nulla tempora adipisci totam sapiente cumque iusto suscipit? Iusto cumque cum unde eveniet ipsum molestiae neque ut excepturi saepe ratione!"
-                  createdAt={new Date("05-10-2025")}
-                  updatedAt={new Date("06-10-2025")}
-                />
-              </li>
-            </ol>
+          <section className="max-w-xl grid gap-y-8 mt-12 mx-auto">
+            <CommentBox blogId={blogId} />
           </section>
         )}
       </div>

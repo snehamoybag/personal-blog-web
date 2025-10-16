@@ -1,22 +1,88 @@
-import type { ReactElement } from "react";
-import type { User } from "../types/User";
+import {
+  useEffect,
+  useState,
+  type ChangeEventHandler,
+  type FormEventHandler,
+  type ReactElement,
+} from "react";
 import FieldWrapper from "./form-elemets/FieldWrapper";
 import Textarea from "./form-elemets/Textarea";
 import AvatarIcon from "./AvatarIcon";
 import { Link } from "react-router";
 import ButtonPrimary from "./buttons/ButtonPrimary";
+import useUser from "../hooks/useUser";
+import type { Comment } from "../types/Comment.type";
+import useDataFetcher from "../hooks/useDataFetcher";
+import getApiUrl from "../libs/getApiUrl";
+import useAuthToken from "../hooks/useAuthToken";
+import ErrorLabel from "./form-elemets/ErrorLabel";
+import type { FieldErrors } from "../types/FieldErrors";
 
 interface CommentEditorProps {
-  author: User;
+  blogId: number;
+  // this trigger a re-render of the parent forcing the comments list to update
+  onSuccess: (postedComment: Comment) => void;
   className?: string;
 }
 
 export default function CommentEditor({
-  author,
+  blogId,
+  onSuccess,
   className = "",
 }: Readonly<CommentEditorProps>): ReactElement {
-  if (!author) {
-    return <p>Login to comment.</p>;
+  const { user: author } = useUser();
+  const { authToken } = useAuthToken();
+  const { state, data, error, fetcher } = useDataFetcher();
+  const [formData, setFormData] = useState({
+    message: "",
+  });
+
+  const formErrors = data && data.errors ? (data.errors as FieldErrors) : null;
+  const postedComment = data && data.comment ? (data.comment as Comment) : null;
+
+  const handleFormDataChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+    const elem = e.currentTarget;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [elem.name]: elem.value,
+    }));
+  };
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+
+    if (!author || !authToken) {
+      return;
+    }
+
+    const url = `${getApiUrl()}/blogs/${blogId}/comments`;
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", `Bearer ${authToken}`);
+
+    fetcher(url, {
+      mode: "cors",
+      method: "POST",
+      headers,
+      body: JSON.stringify(formData),
+    });
+  };
+
+  // call success everytime new comment is posted
+  useEffect(() => {
+    if (postedComment) {
+      onSuccess(postedComment);
+      setFormData({ message: "" });
+    }
+  }, [postedComment, onSuccess]);
+
+  if (!author || !authToken) {
+    return (
+      <p>
+        <Link to="/login">Login</Link> to comment.
+      </p>
+    );
   }
 
   return (
@@ -29,20 +95,42 @@ export default function CommentEditor({
           className="size-12"
         />
       </Link>
-      <form action="/comments" method="post" className="basis-full">
+      <form
+        action="/comments"
+        method="post"
+        className="basis-full"
+        onSubmit={handleSubmit}
+      >
         <FieldWrapper>
-          <label htmlFor="comment" className="sr-only">
+          <label htmlFor="message" className="sr-only">
             comment:
           </label>
           <Textarea
-            id="comment"
-            name="comment"
+            id="message"
+            name="message"
             rows={3}
             placeholder="Write a comment..."
+            value={formData.message}
             required
+            onChange={handleFormDataChange}
+            isInvalid={Boolean(error || (formErrors && formErrors.message))}
           />
+
+          {/* fetch error */}
+          {error && <ErrorLabel htmlFor="message">{error.message}</ErrorLabel>}
+
+          {/* possible validation error */}
+          {formErrors && formErrors.message && (
+            <ErrorLabel htmlFor="message">{formErrors.message.msg}</ErrorLabel>
+          )}
         </FieldWrapper>
-        <ButtonPrimary className="mt-4">Comment</ButtonPrimary>
+        <ButtonPrimary
+          type="submit"
+          className={`mt-4 ${state === "LOADING" ? "cursor-not-allowed active:transform-none" : ""}`}
+          disabled={state === "LOADING"}
+        >
+          {state === "LOADING" ? "Posting..." : "Comment"}
+        </ButtonPrimary>
       </form>
     </div>
   );

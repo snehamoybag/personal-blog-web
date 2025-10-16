@@ -5,4 +5,9 @@ export interface OutletContext {
     get: User | null;
     set: React.Dispatch<React.SetStateAction<User | null>>;
   };
+
+  authToken: {
+    get: string | null;
+    set: React.Dispatch<React.SetStateAction<string | null>>;
+  };
 }

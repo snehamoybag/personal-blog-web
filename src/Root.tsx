@@ -14,9 +14,13 @@ import {
 import type { OutletContext } from "./types/OutletCotext";
 import GuestAccountOptions from "./components/GuestAccountOptions";
 import UserAccountOptions from "./components/UserAccountOptions";
+import { getAuthTokenFromLocalStorage } from "./libs/localStorageAPIAuthToken";
 
 function Root() {
   const [user, setUser] = useState<User | null>(getUserFromLocalStorage);
+  const [authToken, setAuthToken] = useState<string | null>(
+    getAuthTokenFromLocalStorage,
+  );
 
   useEffect(() => {
     // sync local storage with component
@@ -27,6 +31,10 @@ function Root() {
     user: {
       get: user,
       set: setUser,
+    },
+    authToken: {
+      get: authToken,
+      set: setAuthToken,
     },
   };
 

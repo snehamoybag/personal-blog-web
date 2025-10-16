@@ -5,8 +5,8 @@ import AuthorAndDate from "./AuthorAndDate";
 interface CommentProps {
   author: User;
   message: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   className?: string;
 }
 
