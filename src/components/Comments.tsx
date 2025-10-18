@@ -40,8 +40,10 @@ export default function Comments({
     fetcher: loadMoreFetcher,
   } = useDataFetcher();
 
+  const [isLoadMoreAvailable, setIsLoadMoreAvailable] = useState(true);
+
   const limit = 10;
-  const [offset, setOffset] = useState(10); // default offset is 10 as the loader loads the first 10
+  const offset = comments.length;
 
   const baseUrl = `${apiUrl}/blogs/${blogId}/comments`;
 
@@ -61,22 +63,12 @@ export default function Comments({
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
 
-    loader(`${baseUrl}/?limit=10&offset=0`, {
+    loader(`${baseUrl}/?limit=${limit}&offset=0`, {
       mode: "cors",
       method: "GET",
       headers,
     });
   }, [loader, baseUrl, newComment]);
-
-  // sync offset with loadmore data
-  // everytime new data is fetched via loadmore the offset gets updated
-  useEffect(() => {
-    if (!loadMoreData) {
-      return;
-    }
-
-    setOffset((prevOffset) => prevOffset + limit);
-  }, [loadMoreData]);
 
   // sync comments with loader data
   useEffect(() => {
@@ -87,10 +79,16 @@ export default function Comments({
 
   // sync comments with load more data
   useEffect(() => {
-    if (loadMoreData && loadMoreData.comments) {
-      setComments((prevComments) =>
-        prevComments.concat(loadMoreData.comments as CommentType[]),
-      );
+    if (!loadMoreData || !loadMoreData.comments) {
+      return;
+    }
+
+    const loadMoreComments = loadMoreData.comments as CommentType[];
+    setComments((prevComments) => prevComments.concat(loadMoreComments));
+
+    // update the loadmore button state
+    if (loadMoreComments.length < limit) {
+      setIsLoadMoreAvailable(false);
     }
   }, [loadMoreData]);
 
@@ -114,13 +112,15 @@ export default function Comments({
 
       <div className="grid justify-center">
         {/* loadmore button */}
-        <ButtonPrimary
-          type="button"
-          className="max-w-fit"
-          onClick={handleLoadMore}
-        >
-          Load more...
-        </ButtonPrimary>
+        {loadMoreSate !== "LOADING" && isLoadMoreAvailable && (
+          <ButtonPrimary
+            type="button"
+            className="max-w-fit"
+            onClick={handleLoadMore}
+          >
+            Load more...
+          </ButtonPrimary>
+        )}
 
         {/* loading */}
         {(loaderState === "LOADING" || loadMoreSate === "LOADING") && (
