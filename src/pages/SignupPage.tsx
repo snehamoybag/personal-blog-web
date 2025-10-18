@@ -13,16 +13,12 @@ import useUser from "../hooks/useUser";
 import getApiUrl from "../libs/getApiUrl";
 import type { ParsedResponseShape } from "../types/ResponseShape";
 import { Link, useNavigate } from "react-router";
-import { setAuthTokenToLocalStorage } from "../libs/localStorageAPIAuthToken";
 import type { User } from "../types/User";
 import type { FieldErrors } from "../types/FieldErrors";
 import ErrorLabel from "../components/form-elemets/ErrorLabel";
+import useAuthToken from "../hooks/useAuthToken";
 
-interface SignupPageProps {
-  // props
-}
-
-export default function SignupPage({}: Readonly<SignupPageProps>): ReactElement {
+export default function SignupPage(): ReactElement {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -30,14 +26,13 @@ export default function SignupPage({}: Readonly<SignupPageProps>): ReactElement 
     password: "",
     confirmedPassword: "",
   });
-
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
-
-  const redirectTo = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const { setUser } = useUser();
+  const { setAuthToken } = useAuthToken();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const redirectTo = useNavigate();
 
   const handleFormDataChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const elem = e.target;
@@ -96,12 +91,10 @@ export default function SignupPage({}: Readonly<SignupPageProps>): ReactElement 
 
         // set user and auth token
         setUser(data.user as User);
-        setAuthTokenToLocalStorage(
-          typeof data.token === "string" ? data.token : "",
-        );
+        setAuthToken((data.token as string) || null);
 
         // redirect to homepage after successful login
-        redirectTo("/");
+        void redirectTo("/");
       })
       .catch((err) => {
         throw err;

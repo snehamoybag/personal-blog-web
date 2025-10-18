@@ -14,13 +14,15 @@ import getApiUrl from "../libs/getApiUrl";
 import type { ParsedResponseShape } from "../types/ResponseShape";
 import type { User } from "../types/User";
 import { Link, useNavigate } from "react-router";
-import { setAuthTokenToLocalStorage } from "../libs/localStorageAPIAuthToken";
+import useAuthToken from "../hooks/useAuthToken";
 
 export default function LoginPage(): ReactElement {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { setUser } = useUser();
+  const { setAuthToken } = useAuthToken();
+
   const redirectTo = useNavigate();
 
   const handleFormDataChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -64,16 +66,17 @@ export default function LoginPage(): ReactElement {
 
         // set user and auth token
         setUser(data.user as User);
-        setAuthTokenToLocalStorage(
-          typeof data.token === "string" ? data.token : "",
-        );
+        setAuthToken((data.token as string) || null);
 
         // redirect to homepage after successful login
-        redirectTo("/");
+        void redirectTo("/");
       })
       .catch((err) => {
-        setError(err);
-        throw err;
+        if (err instanceof Error) {
+          setError(err);
+        } else {
+          setError(new Error("Something went wrong during login."));
+        }
       })
       .finally(() => setIsLoading(false));
   };
