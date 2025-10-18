@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import BlogPage from "./pages/BlogPage";
 import ErrorPage from "./pages/ErrorPage";
+import LogoutPage from "./pages/LogoutPage";
 
 const routes: RouteObject[] = [
   {
@@ -16,13 +17,18 @@ const routes: RouteObject[] = [
       { index: true, element: <IndexPage /> },
 
       {
+        path: "/signup",
+        element: <SignupPage />,
+      },
+
+      {
         path: "/login",
         element: <LoginPage />,
       },
 
       {
-        path: "/signup",
-        element: <SignupPage />,
+        path: "/logout",
+        element: <LogoutPage />,
       },
 
       {

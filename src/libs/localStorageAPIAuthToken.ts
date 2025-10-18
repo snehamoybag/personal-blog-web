@@ -1,4 +1,4 @@
-const TOKEN_KEY = import.meta.env.VITE_API_AUTH_TOKEN_KEY;
+const TOKEN_KEY = import.meta.env.VITE_API_AUTH_TOKEN_KEY as string;
 
 export const getAuthTokenFromLocalStorage = () => {
   const token = localStorage.getItem(TOKEN_KEY);
@@ -10,6 +10,11 @@ export const getAuthTokenFromLocalStorage = () => {
   return token;
 };
 
-export const setAuthTokenToLocalStorage = (token: string) => {
-  localStorage.setItem(TOKEN_KEY, token);
+export const setAuthTokenToLocalStorage = (value: string | null) => {
+  if (!value) {
+    localStorage.removeItem(TOKEN_KEY);
+    return;
+  }
+
+  localStorage.setItem(TOKEN_KEY, value);
 };
