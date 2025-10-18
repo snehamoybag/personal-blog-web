@@ -49,7 +49,7 @@ export default function IndexPage(): ReactElement {
 
         {/* blogs if available */}
         {blogs && blogs.length && (
-          <ul>
+          <ul className="grid gap-y-12">
             {blogs.map((blog) => (
               <li key={blog.id}>
                 <Post blog={blog} />

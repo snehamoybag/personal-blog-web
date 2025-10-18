@@ -65,19 +65,19 @@ export default function BlogPage(): ReactElement {
             <img src={coverImgUrl} alt="cover image" />
           </header>
 
-          <section>{content}</section>
+          <p className="wrap-anywhere hyphens-auto">{content}</p>
 
           <footer>
             <div className="flex gap-2">
               <Tittle400>Tags: </Tittle400>
 
-              <ol className="flex flex-wrap items-center gap-2">
+              <ul className="flex flex-wrap items-center gap-2">
                 {tags.map((tagName) => (
                   <li key={tagName}>
                     <Tag name={tagName} />
                   </li>
                 ))}
-              </ol>
+              </ul>
             </div>
           </footer>
         </article>

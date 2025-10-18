@@ -39,7 +39,7 @@ export default function Post({
 
   return (
     <article
-      className={`grid gap-y-4 px-4 py-8 border-b-1 border-neutral-700 ${className}`}
+      className={`grid gap-y-4 px-4 pb-8 border-b-1 border-neutral-700 ${className}`}
     >
       <header>
         <Tittle700>
@@ -60,7 +60,7 @@ export default function Post({
           />
         </Link>
 
-        <p className="mt-4">
+        <p className="wrap-anywhere hyphens-auto mt-4">
           <Link to={blogPageUrl} className="text-current no-underline">
             {formattedContent}
           </Link>
