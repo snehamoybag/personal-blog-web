@@ -4,7 +4,7 @@ import ListItem from "./ListItem";
 import AvatarIcon from "./AvatarIcon";
 import { Link } from "react-router";
 
-const editorSiteUrl = import.meta.env.VITE_EDITOR_URL;
+const editorSiteUrl = import.meta.env.VITE_EDITOR_URL as string;
 
 interface UserAccountOptionsProps {
   user: User;
@@ -28,7 +28,7 @@ export default function UserAccountOptions({
           <p className="capitalize">
             {profile.firstName} {profile.lastName}
           </p>
-          <Link to={`/user/${user.id}`} className="text-xs sm:text-sm">
+          <Link to={`/users/${user.id}`} className="text-xs sm:text-sm">
             View Account
           </Link>
         </div>

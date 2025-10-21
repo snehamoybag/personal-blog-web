@@ -5,7 +5,7 @@ export interface Blog {
   title: string;
   coverImgUrl: string;
   content: string;
-  status: "PUBLISHED" | "DRAFT";
+  status: "PUBLISHED" | "ARCHIVED";
   createdAt: string;
   updatedAt: string;
   authorId: number;

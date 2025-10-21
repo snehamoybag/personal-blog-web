@@ -6,6 +6,7 @@ import SignupPage from "./pages/SignupPage";
 import BlogPage from "./pages/BlogPage";
 import ErrorPage from "./pages/ErrorPage";
 import LogoutPage from "./pages/LogoutPage";
+import AccountPage from "./pages/AccountPage";
 
 const routes: RouteObject[] = [
   {
@@ -34,6 +35,11 @@ const routes: RouteObject[] = [
       {
         path: "/blogs/:blogId",
         element: <BlogPage />,
+      },
+
+      {
+        path: "/users/:userId",
+        element: <AccountPage />,
       },
     ],
   },
