@@ -8,7 +8,6 @@ import useDataFetcher from "../hooks/useDataFetcher";
 import LoadingModal from "../components/LoadingModal";
 import ButtonPrimary from "../components/buttons/ButtonPrimary";
 import UserWrittenBlogs from "../components/UserWrittenBlogs";
-import Tittle700 from "../components/titles/Tittle700";
 
 export default function AccountPage(): ReactElement {
   const { userId } = useParams();
@@ -40,7 +39,7 @@ export default function AccountPage(): ReactElement {
 
   return (
     <Main>
-      <section className="max-w-5xl p-12 bg-neutral-700 mx-auto">
+      <section className="max-w-5xl pb-12 border-b-1 border-neutral-700 mx-auto ">
         {user && <AccountDetails user={user} />}
 
         <LoadingModal
@@ -49,23 +48,23 @@ export default function AccountPage(): ReactElement {
         />
       </section>
 
-      <section className="container-primary mt-12">
-        <h2 className="sr-only">
-          ${user ? user.profile.firstName : "user"} written blogs
-        </h2>
+      {user && (
+        <section className="container-primary mt-12">
+          <h2 className="sr-only">user written blogs</h2>
 
-        {!loadBlogs && (
-          <ButtonPrimary
-            onClick={() => setLoadBlogs(true)}
-            className="block mx-auto"
-          >
-            Load <span className="capitalize">{user?.profile.firstName}</span>'s
-            blogs ?
-          </ButtonPrimary>
-        )}
+          {!loadBlogs && (
+            <ButtonPrimary
+              onClick={() => setLoadBlogs(true)}
+              className="block mx-auto"
+            >
+              Load <span className="capitalize">{user?.profile.firstName}</span>
+              's blogs ?
+            </ButtonPrimary>
+          )}
 
-        {loadBlogs && <UserWrittenBlogs userId={Number(userId)} />}
-      </section>
+          {loadBlogs && <UserWrittenBlogs userId={Number(userId)} />}
+        </section>
+      )}
     </Main>
   );
 }
