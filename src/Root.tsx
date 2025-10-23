@@ -18,15 +18,45 @@ import {
   getAuthTokenFromLocalStorage,
   setAuthTokenToLocalStorage,
 } from "./libs/localStorageAPIAuthToken";
+import getApiUrl from "./libs/getApiUrl";
+import useDataFetcher from "./hooks/useDataFetcher";
+import LoadingModal from "./components/LoadingModal";
 
 function Root() {
+  const { state, error, fetcher } = useDataFetcher();
   const [user, setUser] = useState<User | null>(getUserFromLocalStorage);
   const [authToken, setAuthToken] = useState<string | null>(
     getAuthTokenFromLocalStorage,
   );
 
+  // onload check if the jwt is valid if not logout the user
   useEffect(() => {
-    // sync local storage with component
+    if (!authToken || state !== "IDLE") {
+      return;
+    }
+
+    const url = getApiUrl();
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", `Bearer ${authToken}`);
+
+    fetcher(url, {
+      mode: "cors",
+      method: "POST",
+      headers,
+    });
+  }, [authToken, state, fetcher]);
+
+  // logout user if jwt expired
+  useEffect(() => {
+    if (state === "FINISHED" && error) {
+      setAuthToken(null);
+      setUser(null);
+    }
+  }, [state, error]);
+
+  // sync local storage with component
+  useEffect(() => {
     setUserToLocalStorage(user);
     setAuthTokenToLocalStorage(authToken);
   }, [user, authToken]);
@@ -107,6 +137,8 @@ function Root() {
       </Header>
 
       <Outlet context={outletContext satisfies OutletContext} />
+
+      <LoadingModal message="Loading..." isLoading={state === "LOADING"} />
     </>
   );
 }
