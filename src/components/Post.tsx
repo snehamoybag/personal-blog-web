@@ -4,6 +4,7 @@ import Tittle700 from "./titles/Tittle700";
 import AuthorAndDate from "./AuthorAndDate";
 import Tag from "./Tag";
 import { Link } from "react-router";
+import removeMarkdwonChars from "../libs/removeMarkdownChars";
 
 interface PostProps {
   blog: Blog;
@@ -18,7 +19,7 @@ export default function Post({
   const MAX_CONTENT_LENGTH = 500;
 
   const blogTitle = blog.title;
-  const blogContent = blog.content;
+  const blogContent = removeMarkdwonChars(blog.content, MAX_CONTENT_LENGTH);
 
   const formattedTitle =
     blogTitle.length > MAX_TITLE_LENGTH
