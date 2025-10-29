@@ -11,9 +11,7 @@ import LoadingModal from "../components/LoadingModal";
 import getApiUrl from "../libs/getApiUrl";
 import ButtonPrimary from "../components/buttons/ButtonPrimary";
 import CommentBox from "../components/CommentBox";
-import Markdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { gruvboxDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import Markdown from "../components/Markdown";
 
 export default function BlogPage(): ReactElement {
   const { state: state, data, error, fetcher } = useDataFetcher();
@@ -65,64 +63,17 @@ export default function BlogPage(): ReactElement {
 
             <AuthorAndDate author={author} date={{ createdAt, updatedAt }} />
 
-            <img src={coverImgUrl} alt="cover image" />
+            <img
+              src={coverImgUrl}
+              alt="cover image"
+              className="block mx-auto object-contain"
+            />
           </header>
 
           <section className="wrap-anywhere hyphens-auto whitespace-pre-wrap">
             <h2 className="sr-only">content:</h2>
 
-            <Markdown
-              components={{
-                // map headers
-                h1: (props) => (
-                  <h2 className="text-2xl font-bold sm:text-3xl" {...props} />
-                ),
-
-                h2: (props) => (
-                  <h2 className="text-2xl font-bold sm:text-3xl" {...props} />
-                ),
-
-                h3: (props) => (
-                  <h3 className="text-xl font-bold sm:text-2xl" {...props} />
-                ),
-
-                h4: (props) => (
-                  <h4 className="text-lg font-bold sm:text-xl" {...props} />
-                ),
-
-                h5: (props) => (
-                  <h5 className="text-base font-bold sm:text-lg" {...props} />
-                ),
-
-                h6: (props) => (
-                  <h6 className="text-base font-bold" {...props} />
-                ),
-
-                // code block
-                code(props) {
-                  const { children, className, ...rest } = props;
-                  const match = /language-(\w+)/.exec(className || "");
-                  return match ? (
-                    <SyntaxHighlighter
-                      PreTag="div"
-                      children={
-                        typeof children === "string"
-                          ? String(children).replace(/\n$/, "")
-                          : ""
-                      }
-                      language={match[1]}
-                      style={gruvboxDark}
-                    />
-                  ) : (
-                    <code {...rest} className={className}>
-                      {children}
-                    </code>
-                  );
-                },
-              }}
-            >
-              {content}
-            </Markdown>
+            <Markdown>{content}</Markdown>
           </section>
 
           <footer>
