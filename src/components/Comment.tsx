@@ -1,6 +1,7 @@
 import type { ReactElement } from "react";
 import type { User } from "../types/User";
 import AuthorAndDate from "./AuthorAndDate";
+import UserBadge from "./UserBadge";
 
 interface CommentProps {
   author: User;
@@ -21,6 +22,7 @@ export default function Comment({
     <article className={`border-1 border-neutral-700 rounded-xl ${className}`}>
       <header className="p-4 border-b-1 border-neutral-700">
         <AuthorAndDate author={author} date={{ createdAt, updatedAt }} />
+        <UserBadge role={author.role} className="ml-10 mt-2" />
       </header>
 
       <section className="p-6">

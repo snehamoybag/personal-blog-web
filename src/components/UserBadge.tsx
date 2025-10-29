@@ -32,7 +32,7 @@ export default function UserBadge({
 
   return (
     <p
-      className={`text-xs font-semibold px-2 py-1 border-1 border-solid border-current rounded-lg ${roleStyles} ${className}`}
+      className={`max-w-fit text-xs font-semibold px-2 py-1 border-1 border-solid border-current rounded-lg ${roleStyles} ${className}`}
     >
       <span className="sr-only">role: </span>
       {role}
