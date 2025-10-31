@@ -99,8 +99,8 @@ export default function BlogPage(): ReactElement {
             Load Comments ?
           </ButtonPrimary>
         ) : (
-          <section className="max-w-xl grid gap-y-8 mt-12 mx-auto">
-            <CommentBox blogId={blogId} />
+          <section className="max-w-xl mt-12 mx-auto">
+            <CommentBox blogId={blogId} className="grid items-center gap-y-8" />
           </section>
         )}
       </div>
