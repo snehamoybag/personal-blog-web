@@ -14,7 +14,7 @@ export default function AuthorAndDate({
   date,
   className = "",
 }: Readonly<AuthorAndDateProps>): ReactElement {
-  const authorUrl = `/user/${author.id}`;
+  const authorUrl = `/users/${author.id}`;
   const profile = author.profile;
 
   return (
