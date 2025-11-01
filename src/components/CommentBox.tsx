@@ -64,9 +64,20 @@ const CommentBox = ({
   // sync load more commets
   useEffect(() => {
     if (loadMoreData && loadMoreData.comments) {
-      setComments((prevComments) =>
-        prevComments.concat(loadMoreData.comments as CommentType[]),
-      );
+      setComments((prevComments) => {
+        const loadMoreComments = loadMoreData.comments as CommentType[];
+
+        // do not add the comments that are already in comments list (not required but adds one extra safety guard)
+        const filteredComments = loadMoreComments.filter((comment) => {
+          return (
+            prevComments.some(
+              (prevComment) => prevComment.id === comment.id,
+            ) === false
+          );
+        });
+
+        return filteredComments;
+      });
     }
   }, [loadMoreData]);
 
@@ -83,9 +94,33 @@ const CommentBox = ({
     setComments((prevComments) => [newComment, ...prevComments]); // place the new comment on top of the list
   }, []);
 
+  const handleEditedComment = useCallback((updatedComment: CommentType) => {
+    setComments((prevComments) =>
+      prevComments.map((comment) => {
+        if (comment.id === updatedComment.id) {
+          return updatedComment;
+        }
+
+        return comment;
+      }),
+    );
+  }, []);
+
+  const handleDeletedComment = useCallback((deletedComment: CommentType) => {
+    setComments((prevComments) =>
+      prevComments.filter((comment) => {
+        return comment.id !== deletedComment.id;
+      }),
+    );
+  }, []);
+
   const commentItemElms = comments.map((comment) => (
     <li key={comment.id} className="mt-8 first-of-type:mt-0">
-      <Comment comment={comment} />
+      <Comment
+        comment={comment}
+        onEdit={handleEditedComment}
+        onDelete={handleDeletedComment}
+      />
     </li>
   ));
 

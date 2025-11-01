@@ -9,35 +9,40 @@ import FieldWrapper from "./form-elemets/FieldWrapper";
 import ButtonPrimary from "./buttons/ButtonPrimary";
 import ErrorLabel from "./form-elemets/ErrorLabel";
 import useDataFetcher from "../hooks/useDataFetcher";
-import type { ParsedResponseShape } from "../types/ResponseShape";
 import getApiUrl from "../libs/getApiUrl";
 import useAuthToken from "../hooks/useAuthToken";
+import type { Comment as CommentType } from "../types/Comment.type";
+import useUser from "../hooks/useUser";
 
 interface CommentUpdateEditorProps {
-  commentId: number;
-  message: string;
-  onSuccess: (data: ParsedResponseShape["data"]) => void;
+  comment: CommentType;
+  onSuccess: (updatedComment: CommentType) => void;
 }
 
 const apiUrl = getApiUrl();
 
 const CommentUpdateEditor = ({
-  commentId,
-  message,
+  comment,
   onSuccess,
 }: Readonly<CommentUpdateEditorProps>): ReactElement => {
+  const { user } = useUser();
   const { authToken } = useAuthToken();
   const { state, data, error, fetcher } = useDataFetcher();
   const [value, setValue] = useState(message);
 
+  if (!user || !authToken) {
+    throw new Error("Please log in to edit comment.");
+  }
+
+  // call it on successful comment edit
   useEffect(() => {
-    if (data) {
-      onSuccess(data);
+    if (data && data.comment) {
+      onSuccess(data.comment as CommentType);
     }
   }, [data, onSuccess]);
 
   if (!authToken) {
-    throw new Error("Please login to update the comment.");
+    throw new Error("Please login to edit the comment.");
   }
 
   const handleSubmit: FormEventHandler = (e) => {
@@ -82,9 +87,7 @@ const CommentUpdateEditor = ({
 
       <ButtonPrimary
         type="submit"
-        className={
-          state === "LOADING" ? "cursor-not-allowed active:scale-none" : ""
-        }
+        className={`mt-4 ${state === "LOADING" ? "cursor-not-allowed active:scale-none" : ""}`}
         disabled={state === "LOADING"}
       >
         {state === "LOADING" ? "Updating..." : "Update"}
