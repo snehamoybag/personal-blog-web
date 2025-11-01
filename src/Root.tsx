@@ -133,6 +133,7 @@ function Root() {
             </AccountOptions>
           </div>
         </div>
+
         <SearchModal ref={searchModalRef} />
       </Header>
 
