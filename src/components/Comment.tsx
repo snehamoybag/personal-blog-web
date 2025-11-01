@@ -8,7 +8,7 @@ import AuthorAndDate from "./AuthorAndDate";
 import UserBadge from "./UserBadge";
 import CommentOptions from "./CommentOptions";
 import useUser from "../hooks/useUser";
-import ButtonReply from "./buttons/ButtonReply";
+// import ButtonReply from "./buttons/ButtonReply";
 import CommentUpdateEditor from "./CommentUpdateEditor";
 import type { Comment as CommentType } from "../types/Comment.type";
 import useDataFetcher from "../hooks/useDataFetcher";
@@ -38,6 +38,9 @@ export default function Comment({
     error: deleteError,
     fetcher: deleteFetcher,
   } = useDataFetcher();
+
+  const isAuthor = user && user.id === author.id;
+  const isModmin = user && (user.role === "ADMIN" || user.role === "MODERATOR");
 
   if (deleteError) {
     throw deleteError;
@@ -86,23 +89,27 @@ export default function Comment({
           <AuthorAndDate author={author} date={{ createdAt, updatedAt }} />
 
           <div className="flex items-start gap-4">
-            <ButtonReply />
+            {/*TODO: implement comment reply*/}
+            {/*<ButtonReply />*/}
 
-            {user?.id === author.id && (
+            {(isAuthor || isModmin) && (
               <CommentOptions>
                 <ul
                   role="list"
                   className="text-sm [&>li]:px-4 [&>li]:py-2 [&>li]:border-b-1 [&>li]:border-b-neutral-700 [&>li]:last-of-type:border-none"
                 >
-                  <li>
-                    <button
-                      type="button"
-                      className="clickable"
-                      onClick={() => setIsEditMode((prevMode) => !prevMode)}
-                    >
-                      {isEditMode ? "Cancel" : "Edit"}
-                    </button>
-                  </li>
+                  {isAuthor && (
+                    <li>
+                      <button
+                        type="button"
+                        className="clickable"
+                        onClick={() => setIsEditMode((prevMode) => !prevMode)}
+                      >
+                        {isEditMode ? "Cancel" : "Edit"}
+                      </button>
+                    </li>
+                  )}
+
                   <li>
                     <button
                       type="button"
