@@ -50,6 +50,11 @@ export default function Comment({
     }
   }, [deleteData, onDelete]);
 
+  const onEditSuccess = (updatedComment: CommentType) => {
+    onEdit(updatedComment);
+    setIsEditMode(false);
+  };
+
   const deleteComment: MouseEventHandler<HTMLButtonElement> = () => {
     if (deleteState === "LOADING") {
       return;
@@ -117,7 +122,11 @@ export default function Comment({
       </header>
 
       <section className="p-6">
-        {isEditMode ? <form>{/*TODO*/}</form> : <p>{message}</p>}
+        {isEditMode ? (
+          <CommentUpdateEditor comment={comment} onSuccess={onEditSuccess} />
+        ) : (
+          <p>{message}</p>
+        )}
       </section>
     </article>
   );

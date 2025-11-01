@@ -157,7 +157,7 @@ const CommentBox = ({
           </ButtonPrimary>
 
           {loadMoreError && (
-            <p className="text-red-300">Failed to more comments...</p>
+            <p className="text-red-300">Failed to load more comments...</p>
           )}
         </>
       )}

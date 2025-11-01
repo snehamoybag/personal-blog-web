@@ -1,6 +1,7 @@
 import {
   useEffect,
   useState,
+  type FocusEventHandler,
   type FormEventHandler,
   type ReactElement,
 } from "react";
@@ -25,6 +26,7 @@ const CommentUpdateEditor = ({
   comment,
   onSuccess,
 }: Readonly<CommentUpdateEditorProps>): ReactElement => {
+  const { id: commentId, message, author } = comment;
   const { user } = useUser();
   const { authToken } = useAuthToken();
   const { state, data, error, fetcher } = useDataFetcher();
@@ -34,6 +36,10 @@ const CommentUpdateEditor = ({
     throw new Error("Please log in to edit comment.");
   }
 
+  // authority to edit a comment
+  const hasAuthority =
+    user.id === author.id || user.role === "ADMIN" || user.role === "MODERATOR";
+
   // call it on successful comment edit
   useEffect(() => {
     if (data && data.comment) {
@@ -41,18 +47,15 @@ const CommentUpdateEditor = ({
     }
   }, [data, onSuccess]);
 
-  if (!authToken) {
-    throw new Error("Please login to edit the comment.");
-  }
-
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
 
-    if (state === "LOADING" || !authToken) {
+    if (state === "LOADING" || !hasAuthority) {
       return;
     }
 
     const url = `${apiUrl}/comments/${commentId}`;
+
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     headers.append("Authorization", `Bearer ${authToken}`);
@@ -63,6 +66,12 @@ const CommentUpdateEditor = ({
       headers,
       body: JSON.stringify({ message: value }),
     });
+  };
+
+  const moveCursorToEnd: FocusEventHandler<HTMLTextAreaElement> = (e) => {
+    const elem = e.currentTarget;
+    const lastCharcter = elem.value.length;
+    elem.setSelectionRange(lastCharcter, lastCharcter);
   };
 
   return (
@@ -76,7 +85,15 @@ const CommentUpdateEditor = ({
           onChange={(e) => setValue(e.currentTarget.value)}
           isInvalid={error !== null}
           autoFocus={true}
+          onFocus={moveCursorToEnd}
         />
+
+        {!hasAuthority && (
+          <ErrorLabel htmlFor={`comment${commentId}`}>
+            Bad request: Only the author or an admin/moderator can delete this
+            comment.
+          </ErrorLabel>
+        )}
 
         {error && (
           <ErrorLabel htmlFor={`comment${commentId}`}>
