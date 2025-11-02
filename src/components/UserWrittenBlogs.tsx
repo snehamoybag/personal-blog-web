@@ -119,7 +119,11 @@ export default function UserWrittenBlogs({
 
       {/* load more button */}
       {isLoadMoreAvailable && loadMoreState !== "LOADING" && (
-        <ButtonPrimary>Load more...</ButtonPrimary>
+        <ButtonPrimary onClick={handleLoadMore}>Load more...</ButtonPrimary>
+      )}
+
+      {loadMoreError && (
+        <p className="text-red-300 mt-4">{loadMoreError.message}</p>
       )}
     </div>
   );
