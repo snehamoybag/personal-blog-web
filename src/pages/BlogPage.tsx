@@ -12,6 +12,7 @@ import getApiUrl from "../libs/getApiUrl";
 import ButtonPrimary from "../components/buttons/ButtonPrimary";
 import CommentBox from "../components/CommentBox";
 import Markdown from "../components/Markdown";
+import BlogActions from "../components/BlogActions";
 
 export default function BlogPage(): ReactElement {
   const { state: state, data, error, fetcher } = useDataFetcher();
@@ -57,6 +58,8 @@ export default function BlogPage(): ReactElement {
   return (
     <Main>
       <div className="max-w-5xl mx-auto">
+        <BlogActions blogId={blogId} className="max-w-fit ml-auto mb-8" />
+
         <article className="grid gap-y-12 pb-12 border-b-1 border-neutral-700">
           <header className="grid gap-y-4">
             <Tittle700 as="h1">{title}</Tittle700>

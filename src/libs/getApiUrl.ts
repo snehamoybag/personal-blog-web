@@ -1,5 +1,5 @@
 const getApiUrl = () => {
-  const url = import.meta.env.VITE_API_URL as string;
+  const url = import.meta.env.VITE_API_URL as unknown;
 
   if (!url) {
     throw new Error("Api url not found in enviroment variables.");
