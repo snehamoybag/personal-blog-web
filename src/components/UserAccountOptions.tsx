@@ -3,8 +3,9 @@ import type { User } from "../types/User";
 import ListItem from "./ListItem";
 import AvatarIcon from "./AvatarIcon";
 import { Link } from "react-router";
+import getEditorUrl from "../libs/getEdiorUrl";
 
-const editorSiteUrl = import.meta.env.VITE_EDITOR_URL as string;
+const editorSiteUrl = getEditorUrl();
 
 interface UserAccountOptionsProps {
   user: User;
