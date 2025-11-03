@@ -140,6 +140,18 @@ function Root() {
       <Outlet context={outletContext satisfies OutletContext} />
 
       <LoadingModal message="Loading..." isLoading={state === "LOADING"} />
+
+      <footer className="px-4 py-8 border-t-1 border-neutral-700">
+        <p className="text-center">
+          <small>
+            &copy; Build by{" "}
+            <a href="https://github.com/snehamoybag" target="_blank">
+              Snehamoy Bag
+            </a>
+            .
+          </small>
+        </p>
+      </footer>
     </>
   );
 }
