@@ -141,7 +141,7 @@ function Root() {
 
       <LoadingModal message="Loading..." isLoading={state === "LOADING"} />
 
-      <footer className="px-4 py-8 border-t-1 border-neutral-700">
+      <footer className="p-4 border-t-1 border-neutral-700">
         <p className="text-center">
           <small>
             &copy; Build by{" "}
