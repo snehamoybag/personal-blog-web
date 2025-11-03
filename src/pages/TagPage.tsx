@@ -48,7 +48,10 @@ export default function TagPage(): ReactElement {
   // fetch initial few blogs on render
   useEffect(() => {
     const url = `${apiUrl}/tags/${tagName}/?limit=${limit}&offset=0`;
-    loader(url, { mode: "cors", method: "GET" });
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
+    loader(url, { mode: "cors", method: "GET", headers });
   }, [tagName, limit, loader]);
 
   // sync with blogs on fetch
@@ -63,8 +66,11 @@ export default function TagPage(): ReactElement {
       return;
     }
 
-    const url = `${apiUrl}/blogs/?limit=${limit}&offset=${offset}`;
-    loadMoreFetcher(url, { mode: "cors" });
+    const url = `${apiUrl}/tags/${tagName}/?limit=${limit}&offset=${offset}`;
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
+    loadMoreFetcher(url, { mode: "cors", method: "GET", headers });
   };
 
   // sync load more blogs
