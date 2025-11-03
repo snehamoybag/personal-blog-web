@@ -18,7 +18,7 @@ export default function ErrorPage(): ReactElement {
     title = `${error.status}: ${error.statusText}`;
     paragraph = JSON.stringify(error.data);
   } else if (error instanceof Error) {
-    title = `503 ${"Something went wrong."}`;
+    title = error.name;
     paragraph = error.message;
   }
 

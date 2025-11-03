@@ -7,6 +7,7 @@ import BlogPage from "./pages/BlogPage";
 import ErrorPage from "./pages/ErrorPage";
 import LogoutPage from "./pages/LogoutPage";
 import AccountPage from "./pages/AccountPage";
+import TagPage from "./pages/TagPage";
 
 const routes: RouteObject[] = [
   {
@@ -33,13 +34,18 @@ const routes: RouteObject[] = [
       },
 
       {
+        path: "/users/:userId",
+        element: <AccountPage />,
+      },
+
+      {
         path: "/blogs/:blogId",
         element: <BlogPage />,
       },
 
       {
-        path: "/users/:userId",
-        element: <AccountPage />,
+        path: "/tags/:tagName",
+        element: <TagPage />,
       },
     ],
   },
